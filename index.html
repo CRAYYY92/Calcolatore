@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Calcolatrice</title>
+    <script>
+        function eseguiCalcolo() {
+            const n1 = parseFloat(document.getElementById('numero1').value) || 0;
+            const n2 = parseFloat(document.getElementById('numero2').value) || 0;
+            const operazione = document.getElementById('operazione').value;
+            let risultato;
+
+            switch (operazione) {
+                case 'somma':
+                    risultato = n1 + n2;
+                    break;
+                case 'sottrazione':
+                    risultato = n1 - n2;
+                    break;
+                case 'moltiplicazione':
+                    risultato = n1 * n2;
+                    break;
+                case 'divisione':
+                    risultato = n2 !== 0 ? (n1 / n2) : 'Errore: divisione per zero';
+                    break;
+                default:
+                    risultato = 'Scegli un\'operazione';
+            }
+
+            document.getElementById('risultato').innerText = 'Risultato: ' + risultato;
+        }
+    </script>
+</head>
+<body>
+    <h1>Calcolatrice</h1>
+    <form oninput="eseguiCalcolo()">
+        <input type="number" id="numero1" placeholder="Numero 1">
+        <select id="operazione">
+            <option value="somma">+</option>
+            <option value="sottrazione">-</option>
+            <option value="moltiplicazione">*</option>
+            <option value="divisione">/</option>
+        </select>
+        <input type="number" id="numero2" placeholder="Numero 2">
+    </form>
+    <p id="risultato">Risultato: </p>
+</body>
+</html>
