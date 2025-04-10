@@ -50,3 +50,55 @@
 
         .fisso {
             font-weight: bold;
+        }
+    </style>
+    <script>
+        const numeroFisso = 10; // Modifica qui se vuoi cambiare il numero fisso
+
+        function eseguiCalcolo() {
+            const numero1 = parseFloat(document.getElementById('numero1').value) || 0;
+            const operazione = document.getElementById('operazione').value;
+            let risultato;
+
+            switch (operazione) {
+                case 'somma':
+                    risultato = numero1 + numeroFisso;
+                    break;
+                case 'sottrazione':
+                    risultato = numero1 - numeroFisso;
+                    break;
+                case 'moltiplicazione':
+                    risultato = numero1 * numeroFisso;
+                    break;
+                case 'divisione':
+                    risultato = numeroFisso !== 0 ? (numero1 / numeroFisso) : 'Errore: divisione per zero';
+                    break;
+                default:
+                    risultato = 'Scegli un\'operazione';
+            }
+
+            document.getElementById('risultato').innerText = 'Risultato: ' + risultato;
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Calcolatrice</h1>
+        <img src="HILTI LOGO.jpg" alt="Hilti Logo" class="logo">
+    </div>
+
+    <div class="contenitore">
+        <form oninput="eseguiCalcolo()">
+            <input type="number" id="numero1" placeholder="Inserisci un numero">
+            <select id="operazione">
+                <option value="somma">+</option>
+                <option value="sottrazione">-</option>
+                <option value="moltiplicazione">*</option>
+                <option value="divisione">/</option>
+            </select>
+            <span class="fisso">Numero fisso: <strong>10</strong></span>
+        </form>
+        <div class="risultato-box" id="risultato">Risultato: </div>
+    </div>
+</body>
+</html>
