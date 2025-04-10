@@ -2,26 +2,42 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Calcolatrice</title>
+    <title>Calcolatrice con numero fisso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .contenitore {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .risultato-box {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
     <script>
+        const numeroFisso = 10; // Puoi cambiare questo numero
+
         function eseguiCalcolo() {
-            const n1 = parseFloat(document.getElementById('numero1').value) || 0;
-            const n2 = parseFloat(document.getElementById('numero2').value) || 0;
+            const numero1 = parseFloat(document.getElementById('numero1').value) || 0;
             const operazione = document.getElementById('operazione').value;
             let risultato;
 
             switch (operazione) {
                 case 'somma':
-                    risultato = n1 + n2;
+                    risultato = numero1 + numeroFisso;
                     break;
                 case 'sottrazione':
-                    risultato = n1 - n2;
+                    risultato = numero1 - numeroFisso;
                     break;
                 case 'moltiplicazione':
-                    risultato = n1 * n2;
+                    risultato = numero1 * numeroFisso;
                     break;
                 case 'divisione':
-                    risultato = n2 !== 0 ? (n1 / n2) : 'Errore: divisione per zero';
+                    risultato = numeroFisso !== 0 ? (numero1 / numeroFisso) : 'Errore: divisione per zero';
                     break;
                 default:
                     risultato = 'Scegli un\'operazione';
@@ -33,16 +49,18 @@
 </head>
 <body>
     <h1>Calcolatrice</h1>
-    <form oninput="eseguiCalcolo()">
-        <input type="number" id="numero1" placeholder="Numero 1">
-        <select id="operazione">
-            <option value="somma">+</option>
-            <option value="sottrazione">-</option>
-            <option value="moltiplicazione">*</option>
-            <option value="divisione">/</option>
-        </select>
-        <input type="number" id="numero2" placeholder="Numero 2">
-    </form>
-    <p id="risultato">Risultato: </p>
+    <div class="contenitore">
+        <form oninput="eseguiCalcolo()">
+            <input type="number" id="numero1" placeholder="Inserisci un numero">
+            <select id="operazione">
+                <option value="somma">+</option>
+                <option value="sottrazione">-</option>
+                <option value="moltiplicazione">*</option>
+                <option value="divisione">/</option>
+            </select>
+            <span>Numero fisso: <strong>10</strong></span>
+        </form>
+        <div class="risultato-box" id="risultato">Risultato: </div>
+    </div>
 </body>
 </html>
