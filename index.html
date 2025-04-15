@@ -67,6 +67,19 @@
             font-weight: bold;
         }
 
+        /* Bottone Calcola */
+        .bottone-calcola {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
         /* Etichette nascoste visivamente ma accessibili */
         .visually-hidden {
             position: absolute;
@@ -109,26 +122,26 @@
     </style>
 
     <script>
-        const numeroFisso = 10; // Numero fisso
-
-        function eseguiCalcolo() {
+        function calcola() {
             const numeroDipendenti = parseFloat(document.getElementById('numeroDipendenti').value) || 0;
             const costoOrario = parseFloat(document.getElementById('costoOrario').value) || 25;
-            const oreLavorate = parseFloat(document.getElementById('oreLavorate').value) || 8;
             const fatturato = parseFloat(document.getElementById('fatturato').value) || 0;
 
-            let risultato;
+            // Costo medio personale anno (k€/anno)
+            const costoMedioPersonaleAnno = (costoOrario * numeroDipendenti * 20 * 12) / 1000;
 
-            // Calcolo aggiuntivo
-            const totaleOreLavorate = numeroDipendenti * oreLavorate;
-            const costoTotale = totaleOreLavorate * costoOrario;
-            const produttivita = fatturato / totaleOreLavorate;
+            // Impatto costo personale
+            const impattoCostoPersonale = costoMedioPersonaleAnno / fatturato;
 
-            console.log(`Totale ore lavorate: ${totaleOreLavorate}`);
-            console.log(`Costo totale: ${costoTotale}`);
-            console.log(`Produttività per ora: ${produttivita}`);
+            // Recupero (1%)
+            const recupero1Percento = costoMedioPersonaleAnno * 0.01;
 
-            document.getElementById('risultato').innerText = 'Calcoli eseguiti, vedi console per dettagli.';
+            // Mostra i risultati
+            document.getElementById('risultato').innerHTML = `
+                <p><strong>Costo medio personale anno (k€/anno):</strong> ${costoMedioPersonaleAnno.toFixed(2)}</p>
+                <p><strong>Impatto costo personale:</strong> ${(impattoCostoPersonale * 100).toFixed(2)}%</p>
+                <p><strong>Recupero (1%):</strong> ${recupero1Percento.toFixed(2)} €</p>
+            `;
         }
     </script>
 </head>
@@ -139,23 +152,23 @@
     </div>
 
     <div class="contenitore">
-        <form oninput="eseguiCalcolo()" onsubmit="event.preventDefault()">
+        <form onsubmit="event.preventDefault()">
             <label for="numeroDipendenti">Numero dipendenti operativi</label>
             <input type="number" id="numeroDipendenti" placeholder="Numero dipendenti operativi">
 
-            <label for="costoOrario">Costo orario medio</label>
-            <input type="number" id="costoOrario" value="25" placeholder="Costo orario medio">
-
-            <label for="oreLavorate">Ore lavorate giornaliere</label>
-            <input type="number" id="oreLavorate" value="8" placeholder="Ore lavorate giornaliere">
+            <label for="costoOrario">Costo orario medio (€/h)</label>
+            <input type="number" id="costoOrario" value="25" placeholder="Costo orario medio (€/h)">
 
             <label for="fatturato">Fatturato medio ultimi 2 anni</label>
             <input type="number" id="fatturato" placeholder="Fatturato medio ultimi 2 anni">
             
             <span class="fisso">Numero fisso: <strong>10</strong></span>
+
+            <!-- Bottone per calcolare -->
+            <button type="button" class="bottone-calcola" onclick="calcola()">Calcola</button>
         </form>
 
-        <div class="risultato-box" id="risultato">Inserisci i dati e guarda la console per i calcoli</div>
+        <div class="risultato-box" id="risultato">Inserisci i dati e premi "Calcola" per ottenere i risultati.</div>
     </div>
 </body>
 </html>
