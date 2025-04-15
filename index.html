@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcolatrice con numero fisso</title>
+    <title>Calcolo Impatto Costi del Personale</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,66 +11,52 @@
             margin: 0;
             background-color: #f9f9f9;
             color: #333;
-        }
-
-        .dark-mode {
-            background-color: #333;
-            color: white;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .logo {
-            width: 150px;
-            height: auto;
+            text-align: center;
         }
 
         h1 {
-            margin: 0;
-            font-size: 24px;
+            text-align: center;
+            color: red;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-decoration: underline dotted;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 20px auto;
+            width: 160px;
         }
 
         .contenitore {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
-        .risultato-box {
-            font-size: 1.2em;
-            font-weight: bold;
-            background-color: #e8e8e8;
-            padding: 10px 20px;
-            border-radius: 5px;
-            width: 100%;
-            max-width: 300px;
-            text-align: center;
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            align-items: center;
-        }
-
-        form input,
-        form select {
-            padding: 8px;
-            font-size: 16px;
-            margin-right: 10px;
+            gap: 12px;
             width: 100%;
             max-width: 300px;
         }
 
-        .fisso {
-            font-weight: bold;
+        form input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
         }
 
         .bottone-calcola {
@@ -82,7 +68,6 @@
             font-weight: bold;
             cursor: pointer;
             border-radius: 5px;
-            margin-top: 10px;
         }
 
         .bottone-reset {
@@ -94,79 +79,66 @@
             font-weight: bold;
             cursor: pointer;
             border-radius: 5px;
-            margin-top: 10px;
+        }
+
+        .risultato-box {
+            background-color: #eee;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1em;
+            text-align: left;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .decorazione {
+            max-width: 150px;
+            height: auto;
         }
 
         .modalita-scura {
             margin-top: 20px;
             background-color: black;
             color: white;
-            padding: 10px;
-            cursor: pointer;
+            padding: 10px 20px;
+            border: none;
             font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        .visually-hidden {
-            position: absolute;
-            left: -10000px;
-            top: auto;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
+        .dark-mode {
+            background-color: #333;
+            color: white;
         }
 
-        /* Media Query per schermi piccoli (smartphone) */
+        /* Responsive */
         @media (max-width: 600px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            h1 {
-                font-size: 20px;
-            }
-
-            .logo {
-                width: 120px;
-            }
-
             .contenitore {
-                gap: 15px;
-            }
-
-            .risultato-box {
-                font-size: 1.1em;
-                padding: 8px 15px;
-            }
-
-            form input,
-            form select {
-                max-width: 90%;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
             }
         }
     </style>
-    
+
     <script>
-        // Funzione per calcolare i risultati
         function calcola() {
-            // Prelevare i valori di input
             const numeroDipendenti = parseFloat(document.getElementById('numeroDipendenti').value) || 0;
             const costoOrario = parseFloat(document.getElementById('costoOrario').value) || 25;
             const oreLavorate = parseFloat(document.getElementById('oreLavorate').value) || 8;
             const fatturato = parseFloat(document.getElementById('fatturato').value) || 0;
 
-            // Validazione dei dati
             if (numeroDipendenti <= 0 || costoOrario <= 0 || oreLavorate <= 0 || fatturato <= 0) {
-                alert('Per favore, inserisci valori validi e positivi.');
+                document.getElementById('risultato').innerHTML = '<span style="color:red;">Valori non validi. Controlla i campi.</span>';
                 return;
             }
 
-            // Calcolo dei risultati
             const costoMedioPersonaleAnno = costoOrario * numeroDipendenti * oreLavorate * 20 * 12;
             const impattoCostoPersonale = costoMedioPersonaleAnno / fatturato;
             const recupero1Percento = costoMedioPersonaleAnno * 0.01;
 
-            // Mostrare i risultati sotto la form
             document.getElementById('risultato').innerHTML = `
                 <p><strong>Costo medio personale anno (€):</strong> ${costoMedioPersonaleAnno.toFixed(2)}</p>
                 <p><strong>Impatto costo personale:</strong> ${(impattoCostoPersonale * 100).toFixed(2)}%</p>
@@ -174,7 +146,6 @@
             `;
         }
 
-        // Funzione per resettare i campi
         function resettaCampi() {
             document.getElementById('numeroDipendenti').value = '';
             document.getElementById('costoOrario').value = 25;
@@ -183,41 +154,39 @@
             document.getElementById('risultato').innerHTML = 'Inserisci i dati e premi "Calcola" per ottenere i risultati.';
         }
 
-        // Funzione per attivare/disattivare la modalità scura
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
         }
     </script>
 </head>
 <body>
-    <div class="header">
-        <h1>Calcolatrice</h1>
-        <img src="HILTI LOGO.jpg" alt="Hilti Logo" class="logo">
-    </div>
+
+    <h1>Calcolo Impatto Costi del Personale</h1>
+    <img src="hilti_logo.png" alt="Hilti Logo" class="logo">
 
     <div class="contenitore">
-        <form onsubmit="event.preventDefault()">
-            <label for="numeroDipendenti">Numero dipendenti operativi</label>
-            <input type="number" id="numeroDipendenti" placeholder="Numero dipendenti operativi">
+        <img src="grafico.png" alt="Grafico monitor" class="decorazione">
 
-            <label for="costoOrario">Costo orario medio (€/h)</label>
-            <input type="number" id="costoOrario" value="25" placeholder="Costo orario medio (€/h)">
+        <div class="form-wrapper">
+            <form onsubmit="event.preventDefault()">
+                <input type="number" id="numeroDipendenti" placeholder="Numero dipendenti operativi">
+                <input type="number" id="costoOrario" value="25" placeholder="Costo orario medio (€/h)">
+                <input type="number" id="oreLavorate" value="8" placeholder="Ore lavorate giornaliere (h)">
+                <input type="number" id="fatturato" placeholder="Fatturato medio ultimi 2 anni">
 
-            <label for="oreLavorate">Ore lavorate giornaliere (h)</label>
-            <input type="number" id="oreLavorate" value="8" placeholder="Ore lavorate giornaliere (h)">
+                <button type="button" class="bottone-calcola" onclick="calcola()">Calcola</button>
+                <button type="button" class="bottone-reset" onclick="resettaCampi()">Resetta</button>
+            </form>
 
-            <label for="fatturato">Fatturato medio ultimi 2 anni</label>
-            <input type="number" id="fatturato" placeholder="Fatturato medio ultimi 2 anni">
+            <div class="risultato-box" id="risultato">
+                Inserisci i dati e premi "Calcola" per ottenere i risultati.
+            </div>
 
-            <!-- Bottone per calcolare -->
-            <button type="button" class="bottone-calcola" onclick="calcola()">Calcola</button>
-            <button type="button" class="bottone-reset" onclick="resettaCampi()">Resetta</button>
-        </form>
+            <button class="modalita-scura" onclick="toggleDarkMode()">Modalità scura</button>
+        </div>
 
-        <div class="risultato-box" id="risultato">Inserisci i dati e premi "Calcola" per ottenere i risultati.</div>
-
-        <!-- Modalità scura -->
-        <button class="modalita-scura" onclick="toggleDarkMode()">Modalità scura</button>
+        <img src="uomo_hilti.png" alt="Operaio Hilti" class="decorazione">
     </div>
+
 </body>
 </html>
