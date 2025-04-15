@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ottimizzazione per dispositivi mobili -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calcolatrice con numero fisso</title>
     <style>
         body {
@@ -67,6 +67,16 @@
             font-weight: bold;
         }
 
+        /* Etichette nascoste visivamente ma accessibili */
+        .visually-hidden {
+            position: absolute;
+            left: -10000px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
         /* Media Query per schermi piccoli (smartphone) */
         @media (max-width: 600px) {
             .header {
@@ -96,34 +106,29 @@
                 max-width: 90%;
             }
         }
-
     </style>
+
     <script>
-        const numeroFisso = 10; // Modifica qui se vuoi cambiare il numero fisso
+        const numeroFisso = 10; // Numero fisso
 
         function eseguiCalcolo() {
-            const numero1 = parseFloat(document.getElementById('numero1').value) || 0;
-            const operazione = document.getElementById('operazione').value;
+            const numeroDipendenti = parseFloat(document.getElementById('numeroDipendenti').value) || 0;
+            const costoOrario = parseFloat(document.getElementById('costoOrario').value) || 25;
+            const oreLavorate = parseFloat(document.getElementById('oreLavorate').value) || 8;
+            const fatturato = parseFloat(document.getElementById('fatturato').value) || 0;
+
             let risultato;
 
-            switch (operazione) {
-                case 'somma':
-                    risultato = numero1 + numeroFisso;
-                    break;
-                case 'sottrazione':
-                    risultato = numero1 - numeroFisso;
-                    break;
-                case 'moltiplicazione':
-                    risultato = numero1 * numeroFisso;
-                    break;
-                case 'divisione':
-                    risultato = numeroFisso !== 0 ? (numero1 / numeroFisso) : 'Errore: divisione per zero';
-                    break;
-                default:
-                    risultato = 'Scegli un\'operazione';
-            }
+            // Calcolo aggiuntivo
+            const totaleOreLavorate = numeroDipendenti * oreLavorate;
+            const costoTotale = totaleOreLavorate * costoOrario;
+            const produttivita = fatturato / totaleOreLavorate;
 
-            document.getElementById('risultato').innerText = 'Risultato: ' + risultato;
+            console.log(`Totale ore lavorate: ${totaleOreLavorate}`);
+            console.log(`Costo totale: ${costoTotale}`);
+            console.log(`Produttività per ora: ${produttivita}`);
+
+            document.getElementById('risultato').innerText = 'Calcoli eseguiti, vedi console per dettagli.';
         }
     </script>
 </head>
@@ -134,17 +139,23 @@
     </div>
 
     <div class="contenitore">
-        <form oninput="eseguiCalcolo()">
-            <input type="number" id="numero1" placeholder="Inserisci un numero">
-            <select id="operazione">
-                <option value="somma">+</option>
-                <option value="sottrazione">-</option>
-                <option value="moltiplicazione">*</option>
-                <option value="divisione">/</option>
-            </select>
+        <form oninput="eseguiCalcolo()" onsubmit="event.preventDefault()">
+            <label for="numeroDipendenti">Numero dipendenti operativi</label>
+            <input type="number" id="numeroDipendenti" placeholder="Numero dipendenti operativi">
+
+            <label for="costoOrario">Costo orario medio</label>
+            <input type="number" id="costoOrario" value="25" placeholder="Costo orario medio">
+
+            <label for="oreLavorate">Ore lavorate giornaliere</label>
+            <input type="number" id="oreLavorate" value="8" placeholder="Ore lavorate giornaliere">
+
+            <label for="fatturato">Fatturato medio ultimi 2 anni</label>
+            <input type="number" id="fatturato" placeholder="Fatturato medio ultimi 2 anni">
+            
             <span class="fisso">Numero fisso: <strong>10</strong></span>
         </form>
-        <div class="risultato-box" id="risultato">Risultato: </div>
+
+        <div class="risultato-box" id="risultato">Inserisci i dati e guarda la console per i calcoli</div>
     </div>
 </body>
 </html>
