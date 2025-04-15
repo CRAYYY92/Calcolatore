@@ -97,28 +97,29 @@
             height: auto;
         }
 
-        .modalita-scura {
-            margin-top: 20px;
-            background-color: black;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
+        .immagini-responsive {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
         }
 
-        .dark-mode {
-            background-color: #333;
-            color: white;
-        }
-
-        /* Responsive */
         @media (max-width: 600px) {
             .contenitore {
                 flex-direction: column;
                 align-items: center;
                 gap: 20px;
+            }
+
+            .immagini-responsive {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .decorazione {
+                max-width: 120px;
             }
         }
     </style>
@@ -153,10 +154,6 @@
             document.getElementById('fatturato').value = '';
             document.getElementById('risultato').innerHTML = 'Inserisci i dati e premi "Calcola" per ottenere i risultati.';
         }
-
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
     </script>
 </head>
 <body>
@@ -165,8 +162,6 @@
     <img src="hilti_logo.png" alt="Hilti Logo" class="logo">
 
     <div class="contenitore">
-        <img src="grafico.png" alt="Grafico monitor" class="decorazione">
-
         <div class="form-wrapper">
             <form onsubmit="event.preventDefault()">
                 <input type="number" id="numeroDipendenti" placeholder="Numero dipendenti operativi">
@@ -181,10 +176,11 @@
             <div class="risultato-box" id="risultato">
                 Inserisci i dati e premi "Calcola" per ottenere i risultati.
             </div>
-
-            <button class="modalita-scura" onclick="toggleDarkMode()">Modalità scura</button>
         </div>
+    </div>
 
+    <div class="immagini-responsive">
+        <img src="grafico.png" alt="Grafico monitor" class="decorazione">
         <img src="uomo_hilti.png" alt="Operaio Hilti" class="decorazione">
     </div>
 
