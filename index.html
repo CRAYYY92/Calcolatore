@@ -141,7 +141,7 @@
             document.getElementById('risultato').innerHTML = `
                 <p><strong>Costo medio personale anno (€):</strong> ${costoMedioPersonaleAnno.toFixed(2)}</p>
                 <p><strong>Impatto costo personale:</strong> ${(impattoCostoPersonale * 100).toFixed(2)}%</p>
-                <p><strong>Recupero (1%):</strong> ${recupero1Percento.toFixed(2)} €</p>
+                <p><strong>Recupero (€) (1%):</strong> ${recupero1Percento.toFixed(2)} €</p>
             `;
         }
     </script>
@@ -163,7 +163,7 @@
             <label for="oreLavorate">Ore lavorate giornaliere (h)</label>
             <input type="number" id="oreLavorate" value="8" placeholder="Ore lavorate giornaliere (h)">
 
-            <label for="fatturato">Fatturato medio ultimi 2 anni</label>
+            <label for="fatturato">Fatturato medio ultimi 2 anni (€)</label>
             <input type="number" id="fatturato" placeholder="Fatturato medio ultimi 2 anni">
             
             <span class="fisso">Numero fisso: <strong>10</strong></span>
