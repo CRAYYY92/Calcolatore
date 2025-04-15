@@ -146,7 +146,6 @@
         }
     </style>
     
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Funzione per calcolare i risultati
         function calcola() {
@@ -166,33 +165,13 @@
             const costoMedioPersonaleAnno = costoOrario * numeroDipendenti * oreLavorate * 20 * 12;
             const impattoCostoPersonale = costoMedioPersonaleAnno / fatturato;
             const recupero1Percento = costoMedioPersonaleAnno * 0.01;
-            const costoTotaleOrarioPersonale = costoMedioPersonaleAnno / (numeroDipendenti * oreLavorate * 20 * 12); // Costo per ora
-            const profittoPerDipendente = fatturato / numeroDipendenti;
 
             // Mostrare i risultati sotto la form
             document.getElementById('risultato').innerHTML = `
                 <p><strong>Costo medio personale anno (€):</strong> ${costoMedioPersonaleAnno.toFixed(2)}</p>
                 <p><strong>Impatto costo personale:</strong> ${(impattoCostoPersonale * 100).toFixed(2)}%</p>
                 <p><strong>Recupero (1%):</strong> ${recupero1Percento.toFixed(2)} €</p>
-                <p><strong>Costo totale orario personale (€):</strong> ${costoTotaleOrarioPersonale.toFixed(2)}</p>
-                <p><strong>Profitto per dipendente (€):</strong> ${profittoPerDipendente.toFixed(2)}</p>
             `;
-
-            // Visualizzazione grafico (Impatto costo personale)
-            const ctx = document.getElementById('graficoImpatto').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Impatto costo personale'],
-                    datasets: [{
-                        label: 'Impatto (%)',
-                        data: [(impattoCostoPersonale * 100).toFixed(2)],
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1
-                    }]
-                }
-            });
         }
 
         // Funzione per resettare i campi
@@ -202,8 +181,6 @@
             document.getElementById('oreLavorate').value = 8;
             document.getElementById('fatturato').value = '';
             document.getElementById('risultato').innerHTML = 'Inserisci i dati e premi "Calcola" per ottenere i risultati.';
-            const ctx = document.getElementById('graficoImpatto').getContext('2d');
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         }
 
         // Funzione per attivare/disattivare la modalità scura
@@ -240,8 +217,6 @@
         </form>
 
         <div class="risultato-box" id="risultato">Inserisci i dati e premi "Calcola" per ottenere i risultati.</div>
-
-        <canvas id="graficoImpatto" width="400" height="200"></canvas>
 
         <!-- Modalità scura -->
         <button class="modalita-scura" onclick="toggleDarkMode()">Modalità scura</button>
