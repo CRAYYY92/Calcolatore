@@ -21,7 +21,7 @@
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 20px;
-            text-decoration: underline dotted;
+            /* Sottolineatura rimossa */
         }
 
         .logo {
@@ -57,6 +57,11 @@
             padding: 10px;
             font-size: 16px;
             width: 100%;
+        }
+
+        form button {
+            align-self: center;
+            width: 140px;
         }
 
         .bottone-calcola {
@@ -121,6 +126,10 @@
             .decorazione {
                 max-width: 120px;
             }
+
+            body {
+                padding: 10px;
+            }
         }
     </style>
 
@@ -141,9 +150,9 @@
             const recupero1Percento = costoMedioPersonaleAnno * 0.01;
 
             document.getElementById('risultato').innerHTML = `
-                <p><strong>Costo medio personale anno (€):</strong> ${costoMedioPersonaleAnno.toFixed(2)}</p>
-                <p><strong>Impatto costo personale:</strong> ${(impattoCostoPersonale * 100).toFixed(2)}%</p>
-                <p><strong>Recupero (1%):</strong> ${recupero1Percento.toFixed(2)} €</p>
+                <p><strong>Costo medio personale anno (€):</strong> ${costoMedioPersonaleAnno.toLocaleString('it-IT')}</p>
+                <p><strong>Impatto costo personale:</strong> ${(impattoCostoPersonale * 100).toFixed(2).toLocaleString('it-IT')}%</p>
+                <p><strong>Recupero base post analisi (1%):</strong> ${recupero1Percento.toLocaleString('it-IT')} €</p>
             `;
         }
 
@@ -164,10 +173,10 @@
     <div class="contenitore">
         <div class="form-wrapper">
             <form onsubmit="event.preventDefault()">
-                <input type="number" id="numeroDipendenti" placeholder="Numero dipendenti operativi">
-                <input type="number" id="costoOrario" value="25" placeholder="Costo orario medio (€/h)">
-                <input type="number" id="oreLavorate" value="8" placeholder="Ore lavorate giornaliere (h)">
-                <input type="number" id="fatturato" placeholder="Fatturato medio ultimi 2 anni">
+                <input type="number" id="numeroDipendenti" placeholder="Numero dipendenti operativi" inputmode="decimal">
+                <input type="number" id="costoOrario" value="25" placeholder="Costo orario medio (€/h)" inputmode="decimal">
+                <input type="number" id="oreLavorate" value="8" placeholder="Ore lavorate giornaliere (h)" inputmode="decimal">
+                <input type="number" id="fatturato" placeholder="Fatturato medio ultimi 2 anni" inputmode="decimal">
 
                 <button type="button" class="bottone-calcola" onclick="calcola()">Calcola</button>
                 <button type="button" class="bottone-reset" onclick="resettaCampi()">Resetta</button>
