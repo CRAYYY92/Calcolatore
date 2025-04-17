@@ -21,7 +21,6 @@
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 20px;
-            /* Sottolineatura rimossa */
         }
 
         .logo {
@@ -134,11 +133,15 @@
     </style>
 
     <script>
+        function pulisciNumero(formattato) {
+            return formattato.replace(/\./g, "").replace(",", ".");
+        }
+
         function calcola() {
-            const numeroDipendenti = parseFloat(document.getElementById('numeroDipendenti').value) || 0;
-            const costoOrario = parseFloat(document.getElementById('costoOrario').value) || 25;
-            const oreLavorate = parseFloat(document.getElementById('oreLavorate').value) || 8;
-            const fatturato = parseFloat(document.getElementById('fatturato').value) || 0;
+            const numeroDipendenti = parseFloat(pulisciNumero(document.getElementById('numeroDipendenti').value)) || 0;
+            const costoOrario = parseFloat(pulisciNumero(document.getElementById('costoOrario').value)) || 25;
+            const oreLavorate = parseFloat(pulisciNumero(document.getElementById('oreLavorate').value)) || 8;
+            const fatturato = parseFloat(pulisciNumero(document.getElementById('fatturato').value)) || 0;
 
             if (numeroDipendenti <= 0 || costoOrario <= 0 || oreLavorate <= 0 || fatturato <= 0) {
                 document.getElementById('risultato').innerHTML = '<span style="color:red;">Valori non validi. Controlla i campi.</span>';
@@ -158,11 +161,34 @@
 
         function resettaCampi() {
             document.getElementById('numeroDipendenti').value = '';
-            document.getElementById('costoOrario').value = 25;
-            document.getElementById('oreLavorate').value = 8;
+            document.getElementById('costoOrario').value = '25';
+            document.getElementById('oreLavorate').value = '8';
             document.getElementById('fatturato').value = '';
             document.getElementById('risultato').innerHTML = 'Inserisci i dati e premi "Calcola" per ottenere i risultati.';
         }
+
+        function formattaNumeroConPunti(numero) {
+            return numero.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function applicaFormattazioneLive(id) {
+            const input = document.getElementById(id);
+            input.addEventListener('input', () => {
+                const originale = input.value.replace(/\D/g, '');
+                if (originale === '') {
+                    input.value = '';
+                    return;
+                }
+                const formattato = formattaNumeroConPunti(originale);
+                input.value = formattato;
+                input.setSelectionRange(input.value.length, input.value.length);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const campiNumerici = ['numeroDipendenti', 'costoOrario', 'oreLavorate', 'fatturato'];
+            campiNumerici.forEach(id => applicaFormattazioneLive(id));
+        });
     </script>
 </head>
 <body>
@@ -173,10 +199,10 @@
     <div class="contenitore">
         <div class="form-wrapper">
             <form onsubmit="event.preventDefault()">
-                <input type="number" id="numeroDipendenti" placeholder="Numero dipendenti operativi" inputmode="decimal">
-                <input type="number" id="costoOrario" value="25" placeholder="Costo orario medio (€/h)" inputmode="decimal">
-                <input type="number" id="oreLavorate" value="8" placeholder="Ore lavorate giornaliere (h)" inputmode="decimal">
-                <input type="number" id="fatturato" placeholder="Fatturato medio ultimi 2 anni" inputmode="decimal">
+                <input type="text" id="numeroDipendenti" placeholder="Numero dipendenti operativi">
+                <input type="text" id="costoOrario" value="25" placeholder="Costo orario medio (€/h)">
+                <input type="text" id="oreLavorate" value="8" placeholder="Ore lavorate giornaliere (h)">
+                <input type="text" id="fatturato" placeholder="Fatturato medio ultimi 2 anni">
 
                 <button type="button" class="bottone-calcola" onclick="calcola()">Calcola</button>
                 <button type="button" class="bottone-reset" onclick="resettaCampi()">Resetta</button>
