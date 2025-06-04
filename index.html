@@ -154,10 +154,25 @@
 
         function applicaFormattazioneLive(id) {
             const input = document.getElementById(id);
-            input.addEventListener('blur', () => {
-                const numerico = input.value;
-                const formattato = formattaNumeroConPunti(numerico);
-                input.value = formattato;
+            input.addEventListener('input', () => {
+                let valore = input.value;
+        
+                // Rimuove tutto tranne cifre e virgola
+                valore = valore.replace(/[^\d,]/g, '');
+        
+                // Converti temporaneamente per numeri > 999
+                const numerico = parseFloat(valore.replace(/\./g, '').replace(',', '.'));
+                if (isNaN(numerico)) return;
+        
+                // Mantieni il cursore a fine stringa
+                const pos = input.selectionStart;
+                input.value = numerico.toLocaleString('it-IT', {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 0
+                });
+        
+                // Reimposta cursore (approssimato, migliora UX)
+                input.setSelectionRange(input.value.length, input.value.length);
             });
         }
 
