@@ -154,11 +154,10 @@
 
         function applicaFormattazioneLive(id) {
             const input = document.getElementById(id);
-            input.addEventListener('input', () => {
+            input.addEventListener('blur', () => {
                 const numerico = input.value;
                 const formattato = formattaNumeroConPunti(numerico);
                 input.value = formattato;
-                input.setSelectionRange(input.value.length, input.value.length);
             });
         }
 
