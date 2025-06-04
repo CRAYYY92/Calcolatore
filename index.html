@@ -192,8 +192,19 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const campiNumerici = ['numeroDipendenti', 'costoOrario', 'oreLavorate', 'fatturato'];
-            campiNumerici.forEach(id => applicaFormattazioneLive(id));
+            const campiLive = ['numeroDipendenti', 'oreLavorate', 'fatturato'];
+            const campoCostoOrario = 'costoOrario';
+        
+            // Applica formattazione live agli altri campi
+            campiLive.forEach(id => applicaFormattazioneLive(id));
+        
+            // Applica formattazione al blur solo per costoOrario
+            const inputCostoOrario = document.getElementById(campoCostoOrario);
+            inputCostoOrario.addEventListener('blur', () => {
+                const numerico = inputCostoOrario.value;
+                const formattato = formattaNumeroConPunti(numerico);
+                inputCostoOrario.value = formattato;
+            });
         });
     </script>
 </head>
